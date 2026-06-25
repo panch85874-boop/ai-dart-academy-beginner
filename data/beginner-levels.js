@@ -138,6 +138,14 @@
     return [correct, wrongA, wrongB, wrongC];
   }
 
+  function makeVoiceText(meta, text) {
+    return text
+      .replace(`「${meta.title}」`, "本關重點")
+      .replace(meta.title, "本關重點")
+      .replace(`Level ${meta.level}`, "本關")
+      .replace(`初階第 ${meta.level} 關`, "本關");
+  }
+
   function makeMultipleChoice(meta, index, question, answer, wrongA, wrongB, wrongC, hint, explanation) {
     return {
       id: `L${String(meta.level).padStart(2, "0")}-A${String(index).padStart(2, "0")}`,
@@ -148,7 +156,7 @@
       answer,
       hint,
       explanation,
-      voiceText: `${meta.title}。${question}`,
+      voiceText: makeVoiceText(meta, question),
       rewardText: `命中靶心！你抓到「${meta.focus}」的重點了。`
     };
   }
@@ -164,7 +172,7 @@
       answer,
       hint,
       explanation,
-      voiceText: `${meta.title}。${task}`,
+      voiceText: makeVoiceText(meta, task),
       rewardText: "拼得很穩！這句 Prompt 比較清楚，也比較容易被執行。"
     };
   }

@@ -192,7 +192,7 @@
     el.nextLevelButton.disabled = !passed || state.level >= 10;
     setView("completeView");
     window.AcademyAnimations.confetti();
-    speak(passed ? `恭喜完成 ${item.title}。你拿到徽章。` : "練習完成，重新挑戰會更穩。");
+    speak(passed ? "恭喜完成本關。你拿到徽章。" : "練習完成，重新挑戰會更穩。");
   }
 
   function speak(text) {
