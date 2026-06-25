@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI 飛鏢闖關學院初階版，開源、免登入、可離線開啟的 AI 初學互動遊戲。">
+  <title>AI 飛鏢闖關學院｜初階版</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-button" id="homeButton" type="button" aria-label="回首頁">⌂</button>
+      <div>
+        <p class="eyebrow">AI Dart Academy Beginner</p>
+        <h1>AI 飛鏢闖關學院｜初階版</h1>
+      </div>
+      <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true">聲音：開</button>
+    </header>
+
+    <main>
+      <section id="homeView" class="view active" aria-labelledby="homeTitle">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">10 關 · 150 題 · 不用登入</p>
+            <h2 id="homeTitle">用飛鏢闖關，學會把任務交給 AI</h2>
+            <p>從零開始練習 ChatGPT 任務委託、Prompt 寫法與 Codex 基本操作。每一關都有語音、提示、動畫和鼓勵，適合 10 到 60 歲一起練。</p>
+            <div class="hero-actions">
+              <button class="primary-action" id="startButton" type="button">開始學習</button>
+              <button class="secondary-action" id="resumeButton" type="button">接續進度</button>
+            </div>
+            <p class="disclaimer">本專案為學習用途，不代表任何 AI 公司官方課程。</p>
+          </div>
+          <div class="dart-stage hero-stage" aria-hidden="true">
+            <div class="player">黑猩猩<br><span>射飛鏢</span></div>
+            <div class="dart idle-dart">➤</div>
+            <div class="target">
+              <span></span>
+            </div>
+          </div>
+        </div>
+
+        <section class="panel">
+          <div class="section-heading">
+            <h3>初階 10 關進度</h3>
+            <p id="overallProgress">尚未開始</p>
+          </div>
+          <div class="level-grid" id="levelGrid"></div>
+        </section>
+
+        <section class="home-columns">
+          <div class="panel">
+            <div class="section-heading">
+              <h3>今日推薦關卡</h3>
+              <p id="todayHint">系統會依照進度推薦</p>
+            </div>
+            <div id="todayLevel" class="recommend-box"></div>
+          </div>
+          <div class="panel">
+            <div class="section-heading">
+              <h3>已完成徽章</h3>
+              <p id="badgeCount">0 / 10</p>
+            </div>
+            <div class="badge-grid" id="badgeGrid"></div>
+          </div>
+        </section>
+
+        <section class="panel open-source">
+          <h3>開源專案連結</h3>
+          <p>GitHub repo placeholder：<a href="#" aria-label="GitHub repo placeholder">尚未設定</a></p>
+          <p>分享頁 placeholder：<a href="#" aria-label="Open source page placeholder">尚未設定</a></p>
+        </section>
+      </section>
+
+      <section id="gameView" class="view" aria-live="polite">
+        <div class="game-layout">
+          <aside class="level-summary">
+            <button class="secondary-action full" id="backToLevels" type="button">回關卡選單</button>
+            <p class="eyebrow" id="currentLevelLabel">Level 1</p>
+            <h2 id="currentLevelTitle"></h2>
+            <p id="currentLevelGoal"></p>
+            <div class="meter">
+              <span id="questionProgress">第 1 / 15 題</span>
+              <div class="meter-track"><div id="meterFill"></div></div>
+            </div>
+            <div class="score-card">
+              <strong id="scoreNow">0</strong>
+              <span>第一次答對</span>
+              <small>12 題以上過關</small>
+            </div>
+          </aside>
+
+          <section class="question-card">
+            <div class="question-tools">
+              <span id="gameTypePill" class="pill">射飛鏢</span>
+              <button class="secondary-action small" id="playLevelIntro" type="button">播放說明</button>
+              <button class="secondary-action small" id="replayQuestion" type="button">再聽一次</button>
+            </div>
+
+            <div class="dart-stage" id="answerStage" aria-hidden="true">
+              <div class="player">黑猩猩<br><span>瞄準中</span></div>
+              <div class="dart" id="animatedDart">➤</div>
+              <div class="target"><span></span></div>
+            </div>
+
+            <h3 id="questionText"></h3>
+            <div id="choiceArea" class="choice-area"></div>
+            <div id="puzzleArea" class="puzzle-area"></div>
+            <p id="feedback" class="feedback" role="status"></p>
+
+            <div class="game-actions">
+              <button class="secondary-action" id="retryButton" type="button">重新練習</button>
+              <button class="primary-action" id="nextButton" type="button">下一題</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="completeView" class="view complete-view">
+        <div class="complete-card">
+          <div class="confetti-layer" id="confettiLayer"></div>
+          <p class="eyebrow" id="completeLabel">Level 完成</p>
+          <h2 id="completeTitle"></h2>
+          <div class="big-badge" id="completeBadge">★</div>
+          <p id="completeMessage"></p>
+          <div class="result-stars" id="resultStars" aria-label="過關星星"></div>
+          <div class="hero-actions">
+            <button class="primary-action" id="nextLevelButton" type="button">下一關</button>
+            <button class="secondary-action" id="practiceAgainButton" type="button">重新練習</button>
+            <button class="secondary-action" id="completeHomeButton" type="button">回關卡選單</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data/beginner-levels.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/dart-game.js"></script>
+  <script src="js/prompt-puzzle.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
